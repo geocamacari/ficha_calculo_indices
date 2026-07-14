@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha de Verificação Básica de Taxas e Índices Urbanísticos || CLU / DIRURB / SEDUR</title>
+    <style>
+        /* CSS Reset e Configurações Básicas Otimizadas para Tela e Impressão */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 11pt; /* Fonte compacta para otimizar espaço */
+            color: #1a1a1a; /* Texto escuro, sem uso de cor branca */
+            background-color: #f4f4f9;
+            line-height: 1.4;
+        }
+
+        /* Paleta de Cores Conforme Solicitação */
+        .color-violet { color: #6A0DAD; } /* Títulos */
+        .color-indigo { color: #4B0082; }
+        .bg-orange { background-color: #FF8C00; }
+        .bg-green { background-color: #98FB98; } /* Verde claro para fundo de input */
+        .bg-yellow { background-color: #FFD700; }
+        .border-orange { border-left: 4px solid #FF8C00; }
+        .border-green { border-left: 4px solid #228B22; }
+        .border-yellow { border-left: 4px solid #FFD700; }
+        .border-indigo { border-left: 4px solid #4B0082; }
+
+        /* Estrutura Principal */
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #fafafa; /* Quase branco, mas não puro */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Títulos */
+        h1, h2, h3, h4 {
+            color: #6A0DAD; /* Violeta/Lilás */
+            font-weight: bold;
+            margin-bottom: 10px;
+            margin-top: 15px;
+        }
+
+        h1 { font-size: 14pt; text-align: center; border-bottom: 2px solid #FF8C00; padding-bottom: 5px; }
+        h2 { font-size: 12pt; border-bottom: 1px solid #4B0082; padding-bottom: 3px; }
+        h3 { font-size: 11pt; }
+
+        /* Formulários e Grids */
+        .form-section {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #fdfdfd;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+
+        .form-group { display: flex; flex-direction: column; }
+        
+        label {
+            font-weight: bold;
+            color: #4B0082;
+            margin-bottom: 3px;
+            font-size: 10pt;
+        }
+
+        /* Títulos dos menus pop-ups/selects em negrito */
+        select, option { font-weight: bold; }
+
+        input[type="text"], input[type="number"], input[type="date"], select {
+            padding: 6px;
+            border: 1px solid #aaa;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 10pt;
+            background-color: #fffff0; /* Marfim claro, não branco */
+            color: #111;
+        }
+
+        input[readonly] {
+            background-color: #FFD700; /* Amarelo claro para destaque */
+            font-weight: bold;
+            border: 1px solid #ccaa00;
+        }
+
+        .resultado-indices input {
+            background-color: #98FB98; /* Verde indicando cálculo realizado */
+            color: #004d00;
+            font-size: 11pt;
+            text-align: center;
+        }
+
+        /* Box de Resultados de Parâmetros */
+        #parametros-result {
+            padding: 10px;
+            background-color: #e6e6fa; /* Lavanda (Lilás bem claro) */
+            border: 1px solid #6A0DAD;
+            border-radius: 4px;
+            min-height: 80px;
+            margin-top: 10px;
+        }
+
+        /* Botões */
+        .btn-container { text-align: center; margin: 20px 0; }
+        button {
+            background-color: #FF8C00; /* Laranja */
+            color: #1a1a1a; /* Texto escuro */
+            font-weight: bold;
+            padding: 10px 20px;
+            border: 2px solid #cc7000;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 11pt;
+            transition: 0.2s;
+        }
+        button:hover { background-color: #FFD700; /* Muda pra amarelo no hover */ }
+
+        /* Classes de Validação e Feedback Visual */
+        .msg-valida { font-size: 8.5pt; font-weight: bold; margin-top: 4px; display: block; }
+        .text-green { color: #228B22; }
+        .text-red { color: #cc0000; }
+        .text-orange { color: #FF8C00; }
+        .input-error { border: 2px solid #cc0000 !important; background-color: #ffe6e6 !important; color: #cc0000 !important; }
+        .input-success { border: 2px solid #228B22 !important; background-color: #e6ffe6 !important; color: #004d00 !important; }
+        .input-warning { border: 2px solid #FF8C00 !important; background-color: #fff5e6 !important; color: #cc7000 !important; }
+
+        .btn-print-discreet {
+            background-color: #e0e0e0;
+            color: #555;
+            border: 1px solid #ccc;
+            padding: 8px 15px;
+            font-size: 9pt;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 15px auto;
+            display: block;
+            transition: 0.2s;
+            font-weight: bold;
+        }
+        .btn-print-discreet:hover { background-color: #ccc; color: #111; }
+
+        /* Rodapé e Créditos */
+        .footer-info {
+            font-size: 9pt;
+            text-align: justify;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 2px solid #228B22; /* Verde */
+            color: #333;
+        }
+        .credits {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 15px;
+            color: #030005;
+        }
+
+        /* Configurações Estruturais para Impressão com Cabeçalho/Rodapé Repetido */
+        @media print {
+            body { background-color: transparent; font-size: 10pt; }
+            .container { box-shadow: none; margin: 0; padding: 0; border: none; max-width: 100%; }
+            .no-print { display: none !important; }
+            
+            /* Remove bordas de inputs para parecer texto corrido */
+            input, select {
+                border: none;
+                background-color: transparent !important;
+                padding: 0;
+                appearance: none;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+            }
+            .form-section { border: none; border-bottom: 1px dashed #ccc; margin-bottom: 5px; padding: 5px 0; }
+            
+            /* Hack para forçar quebra de página se necessário e manter headers */
+            table.print-layout { width: 100%; border-collapse: collapse; }
+            thead.print-header { display: table-header-group; }
+            tfoot.print-footer { display: table-footer-group; }
+            
+            .header-content h1 { font-size: 12pt; border-bottom: 2px solid #111; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Tabela principal para garantir cabeçalho e rodapé em todas as páginas na impressão -->
+    <table class="print-layout" style="width: 100%; margin: 0 auto; max-width: 900px; background-color: #fed1ff; padding: 15px;">
+        <thead class="print-header">
+            <tr>
+                <td>
+                    <div class="header-content">
+                        <h1>Ficha de Verificação Básica de Taxas e Índices Urbanísticos || CLU / DIRURB / SEDUR</h1>
+                    </div>
+                </td>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <tr>
+                <td>
+                    <div class="container" style="box-shadow: none; background: transparent; padding: 0; margin-top: 10px;">
+                        
+                        <!-- SEÇÃO 1: Dados do Processo -->
+                        <h2>1. Dados Gerais da Análise</h2>
+                        <div class="form-section border-indigo">
+                            <div class="grid-2">
+                                <div class="form-group">
+                                    <label>Número do Processo:</label>
+                                    <input type="text" id="num_processo" placeholder="Ex: 0000/2026">
+                                </div>
+                                <div class="form-group">
+                                    <label>Data de Análise:</label>
+                                    <input type="date" id="data_analise">
+                                </div>
+                            </div>
+                            <div class="grid-2" style="margin-top: 10px;">
+                                <div class="form-group">
+                                    <label>Interessado:</label>
+                                    <input type="text" id="interessado" placeholder="Nome do Requerente">
+                                </div>
+                                <div class="form-group">
+                                    <label>Analista/CLU e Matrícula:</label>
+                                    <input type="text" id="analista" placeholder="Nome do Analista - Matrícula">
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-top: 10px;">
+                                <label>Tipologia do Empreendimento:</label>
+                                <select id="tipologia">
+                                    <option value="" disabled selected>Selecione a Tipologia</option>
+                                    <option value="Loteamento">Loteamento</option>
+                                    <option value="Condomínio de Lotes">Condomínio de Lotes</option>
+                                    <option value="Urbanização Integrada">Urbanização Integrada</option>
+                                    <option value="Condomínio Edilício">Condomínio Edilício</option>
+                                    <option value="Condomínio Horizontal">Condomínio Horizontal</option>
+                                    <option value="MCMV">MCMV (Minha Casa Minha Vida)</option>
+                                    <option value="Empreendimento Turístico">Empreendimento Turístico</option>
+                                    <option value="Comércio/Serviços">Comércio/Serviços</option>
+                                    <option value="Industrial">Industrial</option>
+                                    <option value="Outros">Outros</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- SEÇÃO 2: Quadro de Áreas -->
+                        <h2>2. Quadro de Áreas (m²)</h2>
+                        <div class="form-section border-orange">
+                            <p style="font-size: 9pt; color: #333; margin-bottom: 10px; font-style: italic;">Insira os valores em metros quadrados (m²) utilizando ponto para decimais.</p>
+                            <div class="grid-4">
+                                <div class="form-group">
+                                    <label>Área do Terreno (AT):</label>
+                                    <input type="number" id="at" oninput="calcularIndices()" step="0.01" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Área Total Ocupada (ATO):</label>
+                                    <input type="number" id="ato" oninput="calcularIndices()" step="0.01" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Área Construída Total (ACT):</label>
+                                    <input type="number" id="act" oninput="calcularIndices()" step="0.01" min="0">
+                                </div>
+                                <div class="form-group">
+                                    <label>Área Total Permeável (ATP):</label>
+                                    <input type="number" id="atp" oninput="calcularIndices()" step="0.01" min="0">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SEÇÃO 3: Recuos do Projeto -->
+                        <h2>3. Recuos do Projeto (m)</h2>
+                        <div class="form-section border-indigo">
+                            <div class="form-group" style="flex-direction: row; align-items: center; gap: 8px; margin-bottom: 15px;">
+                                <input type="checkbox" id="recuos_nao_aplica" onchange="toggleRecuos()" style="width:16px; height:16px; cursor:pointer;">
+                                <label for="recuos_nao_aplica" style="margin:0; cursor:pointer; color:#1a1a1a;">Não se aplica a este projeto / isento</label>
+                            </div>
+                            <div class="grid-4">
+                                <div class="form-group">
+                                    <label>Frente (m):</label>
+                                    <input type="number" id="recuo_frente" step="0.01" min="0" oninput="validarConformidade()">
+                                    <span id="val_recuo_frente" class="msg-valida"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Lat. Direita (m):</label>
+                                    <input type="number" id="recuo_lat_dir" step="0.01" min="0" oninput="validarConformidade()">
+                                    <span id="val_recuo_lat_dir" class="msg-valida"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Lat. Esquerda (m):</label>
+                                    <input type="number" id="recuo_lat_esq" step="0.01" min="0" oninput="validarConformidade()">
+                                    <span id="val_recuo_lat_esq" class="msg-valida"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Fundo (m):</label>
+                                    <input type="number" id="recuo_fundo" step="0.01" min="0" oninput="validarConformidade()">
+                                    <span id="val_recuo_fundo" class="msg-valida"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SEÇÃO 4: Cálculos Automáticos -->
+                        <h2>4. Verificação de Taxas e Índices do Projeto</h2>
+                        <div class="form-section border-green resultado-indices">
+                            <p style="font-size: 9pt; color: #333; margin-bottom: 10px; font-weight: bold;">(Cálculo Automático: TO = ATO/AT | TP = ATP/AT | CA = ACT/AT)</p>
+                            <div class="grid-3">
+                                <div class="form-group">
+                                    <label>Taxa de Ocupação (TO %):</label>
+                                    <input type="text" id="res_to" readonly placeholder="0.00%">
+                                    <span id="val_to" class="msg-valida"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Taxa de Permeabilidade (TP %):</label>
+                                    <input type="text" id="res_tp" readonly placeholder="0.00%">
+                                    <span id="val_tp" class="msg-valida"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label>Coef. de Aproveitamento (CA):</label>
+                                    <input type="text" id="res_ca" readonly placeholder="0.00">
+                                    <span id="val_ca" class="msg-valida"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SEÇÃO 5: Parâmetros Urbanísticos e Conformidade -->
+                        <h2>5. Conformidade e Parâmetros de Referência</h2>
+                        <div class="form-section border-yellow">
+                            <div class="grid-2">
+                                <div class="form-group">
+                                    <label>Zona (PDDU):</label>
+                                    <select id="zona" onchange="atualizarUsos()">
+                                        <option value="" disabled selected>Selecione a Zona</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Uso do Solo Pretendido:</label>
+                                    <select id="uso_solo" onchange="verificarParametros()" disabled>
+                                        <option value="" disabled selected>Aguardando Zona...</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div id="parametros-result">
+                                <em>Selecione a Zona e o Uso do Solo para visualizar os Parâmetros e Prerrogativas Especiais de referência da legislação.</em>
+                            </div>
+                        </div>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+
+        <tfoot class="print-footer">
+            <tr>
+                <td>
+                    <div class="footer-info">
+                        <p><strong>Nota Legal:</strong> A íntegra do Plano Diretor de Desenvolvimento Urbano (PDDU), bem como do Código Urbanístico e demais legislações complementares que fundamentam esta análise, estão disponíveis no endereço eletrônico oficial: <strong><a href="https://sissedur.camacari.ba.gov.br/sedur/index" target="_blank" style="color: #4B0082; text-decoration: none;">https://sissedur.camacari.ba.gov.br/sedur/index</a></strong></p>
+                        
+                        <div class="credits">
+                            <p>Coordenadoria de Licenciamento Urbanístico (CLU)</p>
+                            <p>Diretoria de Urbanismo (DIRURB)</p>
+                            <p>Secretaria de Desenvolvimento Urbano e Meio Ambiente (SEDUR) / PMC</p>
+                        </div>
+                        <p style="text-align: center; font-size: 8pt; margin-top: 10px; color: #555;"><b>Aplicação Web desenvolvida pela Coordenadoria de Planejamento e Projetos (CPP/DIRURB/SEDUR) em 2026</b></p>
+                        
+                        <div class="no-print">
+                            <button class="btn-print-discreet" onclick="window.print()" style="background-color: #ffb43b; color: black; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer;">🖨️ Imprimir Ficha / Gerar PDF</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <script>
+        // Função para calcular os Índices
+        function calcularIndices() {
+            // Obter valores numéricos
+            const at = parseFloat(document.getElementById('at').value) || 0;
+            const ato = parseFloat(document.getElementById('ato').value) || 0;
+            const act = parseFloat(document.getElementById('act').value) || 0;
+            const atp = parseFloat(document.getElementById('atp').value) || 0;
+
+            // Elementos de resultado
+            const inputTO = document.getElementById('res_to');
+            const inputTP = document.getElementById('res_tp');
+            const inputCA = document.getElementById('res_ca');
+
+            if (at > 0) {
+                // Fórmulas
+                const TO = (ato / at) * 100;
+                const TP = (atp / at) * 100;
+                const CA = (act / at);
+
+                // Preencher com formatação
+                inputTO.value = TO.toFixed(2) + '%';
+                inputTP.value = TP.toFixed(2) + '%';
+                inputCA.value = CA.toFixed(2);
+            } else {
+                inputTO.value = '';
+                inputTP.value = '';
+                inputCA.value = '';
+            }
+            validarConformidade();
+        }
+
+        // Função para habilitar/desabilitar inputs de recuos do projeto
+        function toggleRecuos() {
+            const isChecked = document.getElementById('recuos_nao_aplica').checked;
+            const recuoInputs = ['recuo_frente', 'recuo_lat_dir', 'recuo_lat_esq', 'recuo_fundo'];
+            recuoInputs.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.disabled = isChecked;
+                    if (isChecked) el.value = '';
+                }
+            });
+            validarConformidade();
+        }
+
+        // Detalhamento das prerrogativas
+        const prerrogativas = {
+            1: "Não é permitido alinhar em divisas, com exceção do disposto no Art. 31 do Código Urbanístico.",
+            2: "Permitido no máximo alinhar a edificação em uma divisa lateral, compensando com o dobro do recuo mínimo no lado oposto, com exceção das ZEIS, que é permitido sem a necessidade de dobrar o recuo nos lados opostos.",
+            3: "Permitido no máximo alinhar a edificação em duas divisas contíguas (lateral e fundo, quando não se tratar de testadas), compensando com o dobro do recuo mínimo nos lados opostos, com exceção das ZEIS, que é permitido sem a necessidade de dobrar o recuo nos lados opostos.",
+            4: "Adotar as seguintes condições para os recuos das construções em relação as divisas do terreno: Recuo lateral = 1,5m + 0,50 * (n-2), onde n = número de pavimentos. Para o recuo frontal, a altura da edificação determina o recuo mínimo (Até 8,00m: 2,5m; 8,00<h≤12,00m: 5m; 12,00<h≤24,00m: 7,5m; 24,00<h≤36,00m: 10m; >36,00m: 15m).",
+            5: "Quando houver divergência entre os parâmetros estabelecidos neste Código e os estabelecidos nos respectivos zoneamentos das Áreas de Proteção Ambiental Joanes-Ipitanga, do Rio Capivara, Lagoas de Guarajuba e demais unidades de conservação, será dado ciência pelo Município a respectiva APA através do órgão competente.",
+            6: "Parâmetros especiais para lotes que possuam acesso pela Estrada do Coco (BA 099), Via COPEC, Via Parafuso (BA 535), Estrada da Cascalheira (BA 531), Via Atlântica (BA 530), Av. Jorge Amado (antiga Av. Leste), Via Metropolitana, Via de Ligação Cascalheira CETREL e inserida na faixa da respectiva centralidade.",
+            7: "Adotar os parâmetros mais restritivos, quando houver divergência entre os parâmetros estabelecidos neste Código e os estabelecidos no Termo de Acordo e Compromisso (TAC) do loteamento/condomínio aprovado, quando for o caso.",
+            8: "Ao longo da BA 099 assegurar a visibilidade mínima de 70% da testada para os terrenos que possuam vista para o mar.",
+            9: "Permitidos parâmetros especiais nas Macroáreas de Estruturação Metropolitana e de Estruturação Urbana indicadas no Plano Diretor onde a Operação Urbana Consorciada (OUC) é permitida.",
+            10: "Aplicação do coeficiente de aproveitamento máximo (CAM) mediante Outorga Onerosa do Direito de Construir ou TRANSCON.",
+            11: "Não é permitido parcelamento do solo.",
+            12: "Licenciamento vinculado à apresentação do projeto de acesso ao empreendimento e sua articulação com as principais vias (Estrada do Coco, Via COPEC, etc.), obedecidas às normas dos órgãos estaduais.",
+            13: "Os usos não residenciais permitidos são os considerados como integrado às atividades do entorno, obedecendo o enquadramento definido no Código Urbanístico, com exceção das atividades de comércio, serviço e indústria do Tipo C (incompatíveis com uso residencial).",
+            14: "Na Zona Rural, para glebas superiores a 10 ha, a área construída máxima permitida é de 50.000,00m².",
+            15: "Exige estudo de sombreamento, para construções novas, reformas e ampliações com altura superior a 12,00m a partir do nível da rua, medidos do ponto médio da(s) testada(s) do imóvel, quando estiver inserida a uma distância de até 90,00m da linha de vegetação, considerando o Corredor Ecológico Orla Marítima.",
+            16: "Para os loteamentos/condomínios listados, somente serão admitidos usos específicos (ex: uniresidencial ou uniresidencial/pluriresidencial).  Para os loteamentos/condomínios a seguir somente serão admitidos o uso residencial – uniresidencial: Cond. Residencial Terra Dourada Parque Camaçari; Cond. Mundo Verde; Cond. Parque de Jauá; Cond. Bosque de Jauá; Cond. Parque Interlagos; Cond. Genipabu Summer Place; Cond. Paraiso do Mar (Genipabu Summer Square); Lot. Aldeias do Jacuípe; Lot. Arembepe Aquaville; Lot. Barra do Jacuípe; Lot. Canto do Mar 1ª Etapa; Lot. Canto do Mar –2ª Etapa A; Lot. Canto do Mar – 2ª Etapa B; Lot. Canto do Mar – 2ª Etapa B1; Lot. Canto do Jacuípe; Lot. Coqueiral Pedra da Cruz (Praia dos Lagos); Lot. Paraíso dos Lagos; Lot. Parque Residencial Canto das Árvores; Lot. Parque Residencial Canto do Bosque; Lot. Parque Residencial Canto das Orquídeas; Lot. Parque Residencial Foz do Jacuípe; Lot. Quinta das Lagoas; Lot. Paradiso Laguna; Lot. Vilas do Jacuípe I; Lot. Vilas do Jacuípe II. Para os loteamentos a seguir relacionados somente serão admitidos o uso residencial – uniresidencial / pluriresidenciais: Lot. Costa Smeralda; Lot. Guarajuba (lado leste).",
+            17: "Quando a topografia do terreno natural a ser implantado o empreendimento apresentar cota de nível inferior à via principal de acesso, será tolerada a extrapolação do gabarito estabelecido para a zona em 01 (um) pavimento a cada 2,00m deste desnível. No caso de terrenos localizados a leste da BA 099, a extrapolação não deve resultar em prejuízo à visão do mar.",
+            18: "No caso de uso pluriresidencial em condomínio vertical, deverá ser adotada a taxa de conforto de 1 habitante / 8,00m² de área construída total, considerando 02 habitantes por dormitório, ou unidade tipo Studio, com exceção das ZEIS.",
+            19: "Para as áreas inseridas na poligonal do Parque Natural Municipal das Dunas de Abrantes e Jauá deverão ser seguidas as diretrizes do Plano de Manejo do parque para ocupação dessas áreas.",
+            20: "Nas Zonas de Uso Especial - ZUE não serão aplicadas as diretrizes definidas nas Centralidades Lineares - CeLin."
+        };
+
+        // Dados extraídos e consolidados do Código Urbanístico (Anexos Quadros 06A, 06B, 06C)
+        const urbanData = [
+            { "ZONA": "ZDC 1", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "1.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "15,00", "Tx de Ocupação (%)": "30", "Tx Permeabilidade (%)": "70", "Coeficiente Básico": "0,50", "Coeficiente Minimo": "0,05", "Coeficiente Máximo": "1,00", "RECUO FRENTE (m)": "6,00", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "5,00", "GABARITO (pavimentos)": "2", "ALTURA máxima (metros)": "8", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 4, 5, 7, 10, 13, 15, 18 e 19" },
+            { "ZONA": "ZDC 1", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "4.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "500,00", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "30", "Tx Permeabilidade (%)": "70", "Coeficiente Básico": "0,50", "Coeficiente Minimo": "0,05", "Coeficiente Máximo": "1,50", "RECUO FRENTE (m)": "6,00", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "5,00", "GABARITO (pavimentos)": "2", "ALTURA máxima (metros)": "8", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 4, 5, 7, 10, 13, 15, 18 e 19" },
+            { "ZONA": "ZDC 1", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "2.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "500,00", "TESTADA minima (m)": "15,00", "Tx de Ocupação (%)": "30", "Tx Permeabilidade (%)": "70", "Coeficiente Básico": "0,50", "Coeficiente Minimo": "0,05", "Coeficiente Máximo": "1,50", "RECUO FRENTE (m)": "6,00", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "5,00", "GABARITO (pavimentos)": "2", "ALTURA máxima (metros)": "8", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 4, 5, 7, 10, 13, 15, 18 e 19" },
+            { "ZONA": "ZDC 1", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "2.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "500,00", "TESTADA minima (m)": "15,00", "Tx de Ocupação (%)": "30", "Tx Permeabilidade (%)": "70", "Coeficiente Básico": "0,50", "Coeficiente Minimo": "0,05", "Coeficiente Máximo": "1,50", "RECUO FRENTE (m)": "6,00", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "5,00", "GABARITO (pavimentos)": "2", "ALTURA máxima (metros)": "8", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 4, 5, 7, 10, 13, 15, 18 e 19" },
+            { "ZONA": "ZDC 1", "USOS DO SOLO": "EMPREENDIMENTO TURÍSTICO", "LOTE MÍNIMO Admitido (m²)": "3.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "30", "Tx Permeabilidade (%)": "70", "Coeficiente Básico": "0,80", "Coeficiente Minimo": "0,05", "Coeficiente Máximo": "2,40", "RECUO FRENTE (m)": "12,00", "RECUO LATERAL (m)": "5,00", "RECUO FUNDO (m)": "5,00", "GABARITO (pavimentos)": "3", "ALTURA máxima (metros)": "12", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 4, 5, 7, 10, 13, 15, 18 e 19" },
+            { "ZONA": "ZDC 2", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "1.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "15,00", "Tx de Ocupação (%)": "40", "Tx Permeabilidade (%)": "60", "Coeficiente Básico": "1,00", "Coeficiente Minimo": "0,05", "Coeficiente Máximo": "1,20", "RECUO FRENTE (m)": "8,00", "RECUO LATERAL (m)": "2,50", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "2", "ALTURA máxima (metros)": "8", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 4, 5, 6, 7, 8, 10, 12, 13, 15, 16, 17, 18 e 19" },
+            { "ZONA": "ZDC 2", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "2.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "500,00", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "40", "Tx Permeabilidade (%)": "60", "Coeficiente Básico": "1,00", "Coeficiente Minimo": "0,05", "Coeficiente Máximo": "3,00", "RECUO FRENTE (m)": "8,00", "RECUO LATERAL (m)": "2,50", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "2", "ALTURA máxima (metros)": "8", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 4, 5, 6, 7, 8, 10, 12, 13, 15, 16, 17, 18 e 19" },
+            { "ZONA": "ZDC 2", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "1.500,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "500,00", "TESTADA minima (m)": "15,00", "Tx de Ocupação (%)": "40", "Tx Permeabilidade (%)": "60", "Coeficiente Básico": "1,00", "Coeficiente Minimo": "0,05", "Coeficiente Máximo": "3,00", "RECUO FRENTE (m)": "8,00", "RECUO LATERAL (m)": "2,50", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "2", "ALTURA máxima (metros)": "8", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 4, 5, 6, 7, 8, 10, 12, 13, 15, 16, 17, 18 e 19" },
+            { "ZONA": "ZDC 2", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "1.500,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "500,00", "TESTADA minima (m)": "15,00", "Tx de Ocupação (%)": "40", "Tx Permeabilidade (%)": "60", "Coeficiente Básico": "1,00", "Coeficiente Minimo": "0,05", "Coeficiente Máximo": "3,00", "RECUO FRENTE (m)": "8,00", "RECUO LATERAL (m)": "2,50", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "2", "ALTURA máxima (metros)": "8", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 4, 5, 6, 7, 8, 10, 12, 13, 15, 16, 17, 18 e 19" },
+            { "ZONA": "ZDC 2", "USOS DO SOLO": "EMPREENDIMENTO TURÍSTICO", "LOTE MÍNIMO Admitido (m²)": "2.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "50", "Tx Permeabilidade (%)": "50", "Coeficiente Básico": "1,20", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "3,60", "RECUO FRENTE (m)": "12,00", "RECUO LATERAL (m)": "5,00", "RECUO FUNDO (m)": "5,00", "GABARITO (pavimentos)": "3", "ALTURA máxima (metros)": "12", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 4, 5, 6, 7, 8, 10, 12, 13, 15, 16, 17, 18 e 19" },
+            { "ZONA": "ZDC 3", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "500,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "10,00", "Tx de Ocupação (%)": "40", "Tx Permeabilidade (%)": "60", "Coeficiente Básico": "1,20", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "1,50", "RECUO FRENTE (m)": "8,00", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "3", "ALTURA máxima (metros)": "12", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 8, 10, 12, 13, 15, 16, 17, 18 e 19" },
+            { "ZONA": "ZDC 3", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "1.500,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "250,00", "TESTADA minima (m)": "15,00", "Tx de Ocupação (%)": "40", "Tx Permeabilidade (%)": "60", "Coeficiente Básico": "1,20", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "3,60", "RECUO FRENTE (m)": "8,00", "RECUO LATERAL (m)": "2,50", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "3", "ALTURA máxima (metros)": "12", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 8, 10, 12, 13, 15, 16, 17, 18 e 19" },
+            { "ZONA": "ZDC 3", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "750,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "250,00", "TESTADA minima (m)": "15,00", "Tx de Ocupação (%)": "40", "Tx Permeabilidade (%)": "60", "Coeficiente Básico": "1,20", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "3,60", "RECUO FRENTE (m)": "8,00", "RECUO LATERAL (m)": "2,50", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "3", "ALTURA máxima (metros)": "12", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 8, 10, 12, 13, 15, 16, 17, 18 e 19" },
+            { "ZONA": "ZDC 3", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "750,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "250,00", "TESTADA minima (m)": "15,00", "Tx de Ocupação (%)": "40", "Tx Permeabilidade (%)": "60", "Coeficiente Básico": "1,20", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "3,60", "RECUO FRENTE (m)": "8,00", "RECUO LATERAL (m)": "2,50", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "3", "ALTURA máxima (metros)": "12", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 8, 10, 12, 13, 15, 16, 17, 18 e 19" },
+            { "ZONA": "ZDC 3", "USOS DO SOLO": "EMPREENDIMENTO TURÍSTICO", "LOTE MÍNIMO Admitido (m²)": "1.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "50", "Tx Permeabilidade (%)": "50", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "12,00", "RECUO LATERAL (m)": "5,00", "RECUO FUNDO (m)": "5,00", "GABARITO (pavimentos)": "4", "ALTURA máxima (metros)": "15", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 8, 10, 12, 13, 15, 16, 17, 18 e 19" },
+            { "ZONA": "ZDC 4", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "300,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "10,00", "Tx de Ocupação (%)": "50", "Tx Permeabilidade (%)": "50", "Coeficiente Básico": "1,20", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "1,50", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "3", "ALTURA máxima (metros)": "12", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 8, 10, 12, 13, 15, 16, 17, 18 e 19" },
+            { "ZONA": "ZDC 4", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "700,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "200,00", "TESTADA minima (m)": "12,00", "Tx de Ocupação (%)": "50", "Tx Permeabilidade (%)": "50", "Coeficiente Básico": "1,20", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "3,60", "RECUO FRENTE (m)": "6,00", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "4", "ALTURA máxima (metros)": "15", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 8, 10, 12, 13, 15, 16, 17, 18 e 19" },
+            { "ZONA": "ZDC 4", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "750,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "200,00", "TESTADA minima (m)": "15,00", "Tx de Ocupação (%)": "50", "Tx Permeabilidade (%)": "50", "Coeficiente Básico": "1,20", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "3,60", "RECUO FRENTE (m)": "6,00", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "4", "ALTURA máxima (metros)": "15", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 8, 10, 12, 13, 15, 16, 17, 18 e 19" },
+            { "ZONA": "ZDC 4", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "750,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "200,00", "TESTADA minima (m)": "15,00", "Tx de Ocupação (%)": "50", "Tx Permeabilidade (%)": "50", "Coeficiente Básico": "1,20", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "3,60", "RECUO FRENTE (m)": "6,00", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "4", "ALTURA máxima (metros)": "15", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 8, 10, 12, 13, 15, 16, 17, 18 e 19" },
+            { "ZONA": "ZDC 4", "USOS DO SOLO": "EMPREENDIMENTO TURÍSTICO", "LOTE MÍNIMO Admitido (m²)": "1.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "40", "Coeficiente Básico": "1,80", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10,00", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "5", "ALTURA máxima (metros)": "18", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 8, 10, 12, 13, 15, 16, 17, 18 e 19" },
+            { "ZONA": "ZDC 5", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "200,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "8,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "40", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "1,80", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "8", "ALTURA máxima (metros)": "27", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 8, 10, 12, 13, 17, 18 e 19" },
+            { "ZONA": "ZDC 5", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "400,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "125,00", "TESTADA minima (m)": "10,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "40", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "8", "ALTURA máxima (metros)": "27", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 8, 10, 12, 13, 17, 18 e 19" },
+            { "ZONA": "ZDC 5", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "300,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "125,00", "TESTADA minima (m)": "10,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "40", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "8", "ALTURA máxima (metros)": "27", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 8, 10, 12, 13, 17, 18 e 19" },
+            { "ZONA": "ZDC 5", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "300,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "125,00", "TESTADA minima (m)": "10,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "40", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "8", "ALTURA máxima (metros)": "27", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 8, 10, 12, 13, 17, 18 e 19" },
+            { "ZONA": "ZDC 5", "USOS DO SOLO": "EMPREENDIMENTO TURÍSTICO", "LOTE MÍNIMO Admitido (m²)": "750,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "50", "Tx Permeabilidade (%)": "50", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "8,00", "RECUO LATERAL (m)": "2,50", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "10", "ALTURA máxima (metros)": "33", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 8, 10, 12, 13, 17, 18 e 19" },
+            { "ZONA": "ZOC 1", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "750,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "10,00", "Tx de Ocupação (%)": "40", "Tx Permeabilidade (%)": "60", "Coeficiente Básico": "1,00", "Coeficiente Minimo": "0,05", "Coeficiente Máximo": "1,20", "RECUO FRENTE (m)": "8,00", "RECUO LATERAL (m)": "2,50", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "3", "ALTURA máxima (metros)": "12", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 4, 6, 7, 10, 12, 16, 17 e 18" },
+            { "ZONA": "ZOC 1", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "1.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "500,00", "TESTADA minima (m)": "12,00", "Tx de Ocupação (%)": "40", "Tx Permeabilidade (%)": "60", "Coeficiente Básico": "1,00", "Coeficiente Minimo": "0,05", "Coeficiente Máximo": "3,00", "RECUO FRENTE (m)": "8,00", "RECUO LATERAL (m)": "2,50", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "3", "ALTURA máxima (metros)": "12", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 4, 6, 7, 10, 12, 16, 17 e 18" },
+            { "ZONA": "ZOC 1", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "500,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "500,00", "TESTADA minima (m)": "12,00", "Tx de Ocupação (%)": "40", "Tx Permeabilidade (%)": "60", "Coeficiente Básico": "1,00", "Coeficiente Minimo": "0,05", "Coeficiente Máximo": "3,00", "RECUO FRENTE (m)": "8,00", "RECUO LATERAL (m)": "2,50", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "3", "ALTURA máxima (metros)": "12", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 4, 6, 7, 10, 12, 16, 17 e 18" },
+            { "ZONA": "ZOC 1", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "500,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "500,00", "TESTADA minima (m)": "12,00", "Tx de Ocupação (%)": "40", "Tx Permeabilidade (%)": "60", "Coeficiente Básico": "1,00", "Coeficiente Minimo": "0,05", "Coeficiente Máximo": "3,00", "RECUO FRENTE (m)": "8,00", "RECUO LATERAL (m)": "2,50", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "3", "ALTURA máxima (metros)": "12", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 4, 6, 7, 10, 12, 16, 17 e 18" },
+            { "ZONA": "ZOC 1", "USOS DO SOLO": "EMPREENDIMENTO TURÍSTICO", "LOTE MÍNIMO Admitido (m²)": "750,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "12,00", "Tx de Ocupação (%)": "70", "Tx Permeabilidade (%)": "30", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "6,00", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "4", "ALTURA máxima (metros)": "15", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 4, 6, 7, 10, 12, 16, 17 e 18" },
+            { "ZONA": "ZOC 2", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "500,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "12,00", "Tx de Ocupação (%)": "40", "Tx Permeabilidade (%)": "60", "Coeficiente Básico": "1,00", "Coeficiente Minimo": "0,05", "Coeficiente Máximo": "1,50", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "4", "ALTURA máxima (metros)": "15", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 4, 5, 6, 7, 10, 12, 13, 17 e 18" },
+            { "ZONA": "ZOC 2", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "750,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "250,00", "TESTADA minima (m)": "12,00", "Tx de Ocupação (%)": "40", "Tx Permeabilidade (%)": "60", "Coeficiente Básico": "1,00", "Coeficiente Minimo": "0,05", "Coeficiente Máximo": "3,00", "RECUO FRENTE (m)": "8,00", "RECUO LATERAL (m)": "2,50", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "4", "ALTURA máxima (metros)": "15", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 4, 5, 6, 7, 10, 12, 13, 17 e 18" },
+            { "ZONA": "ZOC 2", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "500,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "250,00", "TESTADA minima (m)": "12,00", "Tx de Ocupação (%)": "40", "Tx Permeabilidade (%)": "60", "Coeficiente Básico": "1,00", "Coeficiente Minimo": "0,05", "Coeficiente Máximo": "3,00", "RECUO FRENTE (m)": "6,00", "RECUO LATERAL (m)": "2,50", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "4", "ALTURA máxima (metros)": "15", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 4, 5, 6, 7, 10, 12, 13, 17 e 18" },
+            { "ZONA": "ZOC 2", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "500,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "250,00", "TESTADA minima (m)": "12,00", "Tx de Ocupação (%)": "40", "Tx Permeabilidade (%)": "60", "Coeficiente Básico": "1,00", "Coeficiente Minimo": "0,05", "Coeficiente Máximo": "3,00", "RECUO FRENTE (m)": "6,00", "RECUO LATERAL (m)": "2,50", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "4", "ALTURA máxima (metros)": "15", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 4, 5, 6, 7, 10, 12, 13, 17 e 18" },
+            { "ZONA": "ZOC 2", "USOS DO SOLO": "EMPREENDIMENTO TURÍSTICO", "LOTE MÍNIMO Admitido (m²)": "750,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "12,00", "Tx de Ocupação (%)": "70", "Tx Permeabilidade (%)": "30", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "8,00", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "5", "ALTURA máxima (metros)": "18", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 4, 5, 6, 7, 10, 12, 13, 17 e 18" },
+            { "ZONA": "ZOC 3", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "300,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "10,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "40", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "1,80", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "5", "ALTURA máxima (metros)": "18", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 10, 12, 13, 17 e 18" },
+            { "ZONA": "ZOC 3", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "500,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "200,00", "TESTADA minima (m)": "10,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "40", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "5", "ALTURA máxima (metros)": "18", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 10, 12, 13, 17 e 18" },
+            { "ZONA": "ZOC 3", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "500,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "200,00", "TESTADA minima (m)": "10,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "40", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "5", "ALTURA máxima (metros)": "18", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 10, 12, 13, 17 e 18" },
+            { "ZONA": "ZOC 3", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "500,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "200,00", "TESTADA minima (m)": "10,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "40", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "5", "ALTURA máxima (metros)": "18", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 10, 12, 13, 17 e 18" },
+            { "ZONA": "ZOC 3", "USOS DO SOLO": "EMPREENDIMENTO TURÍSTICO", "LOTE MÍNIMO Admitido (m²)": "1.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "15,00", "Tx de Ocupação (%)": "40", "Tx Permeabilidade (%)": "60", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "8,00", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "6", "ALTURA máxima (metros)": "21", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 10, 12, 13, 17 e 18" },
+            { "ZONA": "ZOC 4", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "200,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "8,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "40", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "2,00", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "8", "ALTURA máxima (metros)": "27", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 10, 12, 13, 17 e 18" },
+            { "ZONA": "ZOC 4", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "400,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "125,00", "TESTADA minima (m)": "10,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "40", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "8", "ALTURA máxima (metros)": "27", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 10, 12, 13, 17 e 18" },
+            { "ZONA": "ZOC 4", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "300,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "125,00", "TESTADA minima (m)": "10,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "40", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "8", "ALTURA máxima (metros)": "27", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 10, 12, 13, 17 e 18" },
+            { "ZONA": "ZOC 4", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "300,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "125,00", "TESTADA minima (m)": "10,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "40", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "8", "ALTURA máxima (metros)": "27", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 10, 12, 13, 17 e 18" },
+            { "ZONA": "ZOC 4", "USOS DO SOLO": "EMPREENDIMENTO TURÍSTICO", "LOTE MÍNIMO Admitido (m²)": "750,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "30", "Tx Permeabilidade (%)": "70", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "8,00", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "10", "ALTURA máxima (metros)": "33", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 10, 12, 13, 17 e 18" },
+            { "ZONA": "ZE 1", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "500,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "10,00", "Tx de Ocupação (%)": "70", "Tx Permeabilidade (%)": "30", "Coeficiente Básico": "1,20", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "1,50", "RECUO FRENTE (m)": "2,50", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "Gabarito Livre", "ALTURA máxima (metros)": "Gabarito Livre", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 9, 10, 12, 13, 16, 17 e 18" },
+            { "ZONA": "ZE 1", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "750,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "125,00", "TESTADA minima (m)": "12,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "30", "Coeficiente Básico": "1,20", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "3,60", "RECUO FRENTE (m)": "3,00", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "Gabarito Livre", "ALTURA máxima (metros)": "Gabarito Livre", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 9, 10, 12, 13, 16, 17 e 18" },
+            { "ZONA": "ZE 1", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "500,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "125,00", "TESTADA minima (m)": "10,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "30", "Coeficiente Básico": "1,20", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "3,60", "RECUO FRENTE (m)": "3,00", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "Gabarito Livre", "ALTURA máxima (metros)": "Gabarito Livre", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 9, 10, 12, 13, 16, 17 e 18" },
+            { "ZONA": "ZE 1", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "500,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "125,00", "TESTADA minima (m)": "10,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "30", "Coeficiente Básico": "1,20", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "3,60", "RECUO FRENTE (m)": "3,00", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "Gabarito Livre", "ALTURA máxima (metros)": "Gabarito Livre", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 9, 10, 12, 13, 16, 17 e 18" },
+            { "ZONA": "ZE 1", "USOS DO SOLO": "EMPREENDIMENTO TURÍSTICO", "LOTE MÍNIMO Admitido (m²)": "750,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "12,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "40", "Coeficiente Básico": "1,80", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "Gabarito Livre", "ALTURA máxima (metros)": "Gabarito Livre", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 9, 10, 12, 13, 16, 17 e 18" },
+            { "ZONA": "ZE 2", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "300,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "7,00", "Tx de Ocupação (%)": "50", "Tx Permeabilidade (%)": "50", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "não se aplica", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "Gabarito Livre", "ALTURA máxima (metros)": "Gabarito Livre", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 7, 10, 13 e 18" },
+            { "ZONA": "ZE 2", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "500,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "125,00", "TESTADA minima (m)": "10,00", "Tx de Ocupação (%)": "50", "Tx Permeabilidade (%)": "50", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "Gabarito Livre", "ALTURA máxima (metros)": "Gabarito Livre", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 7, 10, 13 e 18" },
+            { "ZONA": "ZE 2", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "400,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "125,00", "TESTADA minima (m)": "10,00", "Tx de Ocupação (%)": "50", "Tx Permeabilidade (%)": "50", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "Gabarito Livre", "ALTURA máxima (metros)": "Gabarito Livre", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 7, 10, 13 e 18" },
+            { "ZONA": "ZE 2", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "400,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "125,00", "TESTADA minima (m)": "10,00", "Tx de Ocupação (%)": "50", "Tx Permeabilidade (%)": "50", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "Gabarito Livre", "ALTURA máxima (metros)": "Gabarito Livre", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 7, 10, 13 e 18" },
+            { "ZONA": "ZE 2", "USOS DO SOLO": "EMPREENDIMENTO TURÍSTICO", "LOTE MÍNIMO Admitido (m²)": "500,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "12,00", "Tx de Ocupação (%)": "50", "Tx Permeabilidade (%)": "50", "Coeficiente Básico": "3,00", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "Gabarito Livre", "ALTURA máxima (metros)": "Gabarito Livre", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 7, 10, 13 e 18" },
+            { "ZONA": "ZE 3", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "250,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "8,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "40", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "não se aplica", "RECUO FRENTE (m)": "2,50", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "Gabarito Livre", "ALTURA máxima (metros)": "Gabarito Livre", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 10, 12 e 13" },
+            { "ZONA": "ZE 3", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "400,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "125,00", "TESTADA minima (m)": "10,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "40", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "Gabarito Livre", "ALTURA máxima (metros)": "Gabarito Livre", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 10, 12 e 13" },
+            { "ZONA": "ZE 3", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "300,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "125,00", "TESTADA minima (m)": "8,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "40", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "Gabarito Livre", "ALTURA máxima (metros)": "Gabarito Livre", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 10, 12 e 13" },
+            { "ZONA": "ZE 3", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "300,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "125,00", "TESTADA minima (m)": "8,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "40", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "Gabarito Livre", "ALTURA máxima (metros)": "Gabarito Livre", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 10, 12 e 13" },
+            { "ZONA": "ZE 3", "USOS DO SOLO": "EMPREENDIMENTO TURÍSTICO", "LOTE MÍNIMO Admitido (m²)": "500,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "10,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "40", "Coeficiente Básico": "3,00", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "Gabarito Livre", "ALTURA máxima (metros)": "Gabarito Livre", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 10, 12 e 13" },
+            { "ZONA": "ZOUC 1", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "125,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "5,00", "Tx de Ocupação (%)": "75", "Tx Permeabilidade (%)": "25", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "não se aplica", "RECUO FRENTE (m)": "2,50", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "Gabarito Livre", "ALTURA máxima (metros)": "Gabarito Livre", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 9, 10, 12, 13, 18" },
+            { "ZONA": "ZOUC 1", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "250,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "125,00", "TESTADA minima (m)": "8,00", "Tx de Ocupação (%)": "75", "Tx Permeabilidade (%)": "25", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "2,50", "GABARITO (pavimentos)": "Gabarito Livre", "ALTURA máxima (metros)": "Gabarito Livre", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 9, 10, 12, 13 e 18" },
+            { "ZONA": "ZOUC 1", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "250,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "125,00", "TESTADA minima (m)": "10,00", "Tx de Ocupação (%)": "75", "Tx Permeabilidade (%)": "25", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "2,50", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "Gabarito Livre", "ALTURA máxima (metros)": "Gabarito Livre", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 9, 10, 12, 13 e 18" },
+            { "ZONA": "ZOUC 1", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "250,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "125,00", "TESTADA minima (m)": "10,00", "Tx de Ocupação (%)": "75", "Tx Permeabilidade (%)": "25", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "2,50", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "Gabarito Livre", "ALTURA máxima (metros)": "Gabarito Livre", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 9, 10, 12, 13 e 18" },
+            { "ZONA": "ZOUC 1", "USOS DO SOLO": "EMPREENDIMENTO TURÍSTICO", "LOTE MÍNIMO Admitido (m²)": "300,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "10,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "30", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "2,50", "GABARITO (pavimentos)": "Gabarito Livre", "ALTURA máxima (metros)": "Gabarito Livre", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 9, 10, 12, 13 e 18" },
+            { "ZONA": "ZOUC 2", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "125,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "5,00", "Tx de Ocupação (%)": "70", "Tx Permeabilidade (%)": "25", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "2,00", "RECUO FRENTE (m)": "2,50", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "Gabarito Livre", "ALTURA máxima (metros)": "Gabarito Livre", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 9, 10, 12, 13, 17 e 18" },
+            { "ZONA": "ZOUC 2", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "250,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "125,00", "TESTADA minima (m)": "8,00", "Tx de Ocupação (%)": "75", "Tx Permeabilidade (%)": "25", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "2,50", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "Gabarito Livre", "ALTURA máxima (metros)": "Gabarito Livre", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 9, 10, 12, 13, 17 e 18" },
+            { "ZONA": "ZOUC 2", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "350,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "125,00", "TESTADA minima (m)": "10,00", "Tx de Ocupação (%)": "75", "Tx Permeabilidade (%)": "25", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "2,50", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "Gabarito Livre", "ALTURA máxima (metros)": "Gabarito Livre", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 9, 10, 12, 13, 17 e 18" },
+            { "ZONA": "ZOUC 2", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "350,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "125,00", "TESTADA minima (m)": "10,00", "Tx de Ocupação (%)": "75", "Tx Permeabilidade (%)": "25", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "2,50", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "Gabarito Livre", "ALTURA máxima (metros)": "Gabarito Livre", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 9, 10, 12, 13, 17 e 18" },
+            { "ZONA": "ZOUC 2", "USOS DO SOLO": "EMPREENDIMENTO TURÍSTICO", "LOTE MÍNIMO Admitido (m²)": "500,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "12,00", "Tx de Ocupação (%)": "80", "Tx Permeabilidade (%)": "25", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "Gabarito Livre", "ALTURA máxima (metros)": "Gabarito Livre", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 9, 10, 12, 13, 17 e 18" },
+            { "ZONA": "ZAICS 1", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "não se aplica", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "não se aplica", "Tx de Ocupação (%)": "não se aplica", "Tx Permeabilidade (%)": "não se aplica", "Coeficiente Básico": "não se aplica", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "não se aplica", "RECUO FRENTE (m)": "não se aplica", "RECUO LATERAL (m)": "não se aplica", "RECUO FUNDO (m)": "não se aplica", "GABARITO (pavimentos)": "não se aplica", "ALTURA máxima (metros)": "não se aplica", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 9 e 12" },
+            { "ZONA": "ZAICS 1", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "não se aplica", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "não se aplica", "Tx de Ocupação (%)": "não se aplica", "Tx Permeabilidade (%)": "não se aplica", "Coeficiente Básico": "não se aplica", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "não se aplica", "RECUO FRENTE (m)": "não se aplica", "RECUO LATERAL (m)": "não se aplica", "RECUO FUNDO (m)": "não se aplica", "GABARITO (pavimentos)": "não se aplica", "ALTURA máxima (metros)": "não se aplica", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 9 e 12" },
+            { "ZONA": "ZAICS 1", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "500,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "250,00", "TESTADA minima (m)": "10,00", "Tx de Ocupação (%)": "70", "Tx Permeabilidade (%)": "30", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "0,10", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "7,50", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "Gabarito Livre", "ALTURA máxima (metros)": "Gabarito Livre", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 9 e 12" },
+            { "ZONA": "ZAICS 1", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "500,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "250,00", "TESTADA minima (m)": "10,00", "Tx de Ocupação (%)": "70", "Tx Permeabilidade (%)": "30", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "0,10", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "7,50", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "Gabarito Livre", "ALTURA máxima (metros)": "Gabarito Livre", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 9 e 12" },
+            { "ZONA": "ZAICS 1", "USOS DO SOLO": "EMPREENDIMENTO TURÍSTICO", "LOTE MÍNIMO Admitido (m²)": "500,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "12,00", "Tx de Ocupação (%)": "70", "Tx Permeabilidade (%)": "30", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "7,50", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "Gabarito Livre", "ALTURA máxima (metros)": "Gabarito Livre", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 7, 9 e 12" },
+            { "ZONA": "ZAICS 2", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "não se aplica", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "não se aplica", "Tx de Ocupação (%)": "não se aplica", "Tx Permeabilidade (%)": "não se aplica", "Coeficiente Básico": "não se aplica", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "não se aplica", "RECUO FRENTE (m)": "não se aplica", "RECUO LATERAL (m)": "não se aplica", "RECUO FUNDO (m)": "não se aplica", "GABARITO (pavimentos)": "não se aplica", "ALTURA máxima (metros)": "não se aplica", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 4, 6 e 12" },
+            { "ZONA": "ZAICS 2", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "não se aplica", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "não se aplica", "Tx de Ocupação (%)": "não se aplica", "Tx Permeabilidade (%)": "não se aplica", "Coeficiente Básico": "não se aplica", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "não se aplica", "RECUO FRENTE (m)": "não se aplica", "RECUO LATERAL (m)": "não se aplica", "RECUO FUNDO (m)": "não se aplica", "GABARITO (pavimentos)": "não se aplica", "ALTURA máxima (metros)": "não se aplica", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 4, 6 e 12" },
+            { "ZONA": "ZAICS 2", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "1.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "500,00", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "30", "Tx Permeabilidade (%)": "70", "Coeficiente Básico": "1,00", "Coeficiente Minimo": "0,10", "Coeficiente Máximo": "3,00", "RECUO FRENTE (m)": "10,00", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "7", "ALTURA máxima (metros)": "24", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 4, 6 e 12" },
+            { "ZONA": "ZAICS 2", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "1.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "500,00", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "30", "Tx Permeabilidade (%)": "70", "Coeficiente Básico": "1,00", "Coeficiente Minimo": "0,10", "Coeficiente Máximo": "3,00", "RECUO FRENTE (m)": "10,00", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "7", "ALTURA máxima (metros)": "24", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 4, 6 e 12" },
+            { "ZONA": "ZAICS 2", "USOS DO SOLO": "EMPREENDIMENTO TURÍSTICO", "LOTE MÍNIMO Admitido (m²)": "500,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "12,00", "Tx de Ocupação (%)": "70", "Tx Permeabilidade (%)": "30", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "7,50", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "7", "ALTURA máxima (metros)": "24", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 4, 6 e 12" },
+            { "ZONA": "ZUE 1", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "não se aplica", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "não se aplica", "Tx de Ocupação (%)": "não se aplica", "Tx Permeabilidade (%)": "não se aplica", "Coeficiente Básico": "não se aplica", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "não se aplica", "RECUO FRENTE (m)": "não se aplica", "RECUO LATERAL (m)": "não se aplica", "RECUO FUNDO (m)": "não se aplica", "GABARITO (pavimentos)": "não se aplica", "ALTURA máxima (metros)": "não se aplica", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 5, 6, 7, 8, 11, 12, 13, 15, 16, 19 e 20" },
+            { "ZONA": "ZUE 1", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "não se aplica", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "não se aplica", "Tx de Ocupação (%)": "não se aplica", "Tx Permeabilidade (%)": "não se aplica", "Coeficiente Básico": "não se aplica", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "não se aplica", "RECUO FRENTE (m)": "não se aplica", "RECUO LATERAL (m)": "não se aplica", "RECUO FUNDO (m)": "não se aplica", "GABARITO (pavimentos)": "não se aplica", "ALTURA máxima (metros)": "não se aplica", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 5, 6, 7, 8, 11, 12, 13, 15, 16, 19 e 20" },
+            { "ZONA": "ZUE 1", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "não se aplica", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "não se aplica", "Tx de Ocupação (%)": "10", "Tx Permeabilidade (%)": "90", "Coeficiente Básico": "0,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "não se aplica", "RECUO FRENTE (m)": "15,00", "RECUO LATERAL (m)": "5,00", "RECUO FUNDO (m)": "5,00", "GABARITO (pavimentos)": "2", "ALTURA máxima (metros)": "8", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 5, 6, 7, 8, 11, 12, 13, 15, 16, 19 e 20" },
+            { "ZONA": "ZUE 1", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "não se aplica", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "não se aplica", "Tx de Ocupação (%)": "10", "Tx Permeabilidade (%)": "90", "Coeficiente Básico": "0,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "não se aplica", "RECUO FRENTE (m)": "15,00", "RECUO LATERAL (m)": "5,00", "RECUO FUNDO (m)": "5,00", "GABARITO (pavimentos)": "2", "ALTURA máxima (metros)": "8", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 5, 6, 7, 8, 11, 12, 13, 15, 16, 19 e 20" },
+            { "ZONA": "ZUE 1", "USOS DO SOLO": "EMPREENDIMENTO TURÍSTICO", "LOTE MÍNIMO Admitido (m²)": "não se aplica", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "não se aplica", "Tx de Ocupação (%)": "10", "Tx Permeabilidade (%)": "90", "Coeficiente Básico": "0,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "não se aplica", "RECUO FRENTE (m)": "15,00", "RECUO LATERAL (m)": "5,00", "RECUO FUNDO (m)": "5,00", "GABARITO (pavimentos)": "2", "ALTURA máxima (metros)": "8", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 5, 6, 7, 8, 11, 12, 13, 15, 16, 19 e 20" },
+            { "ZONA": "ZUE 2", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "não se aplica", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "não se aplica", "Tx de Ocupação (%)": "não se aplica", "Tx Permeabilidade (%)": "não se aplica", "Coeficiente Básico": "não se aplica", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "não se aplica", "RECUO FRENTE (m)": "não se aplica", "RECUO LATERAL (m)": "não se aplica", "RECUO FUNDO (m)": "não se aplica", "GABARITO (pavimentos)": "não se aplica", "ALTURA máxima (metros)": "não se aplica", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 5, 6, 7, 8, 9, 11, 12, 13, 15, 16 e 20" },
+            { "ZONA": "ZUE 2", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "não se aplica", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "não se aplica", "Tx de Ocupação (%)": "20", "Tx Permeabilidade (%)": "80", "Coeficiente Básico": "0,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "não se aplica", "RECUO FRENTE (m)": "10,00", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "2", "ALTURA máxima (metros)": "8", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 5, 6, 7, 8, 9, 11, 12, 13, 15, 16 e 20" },
+            { "ZONA": "ZUE 2", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "não se aplica", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "não se aplica", "Tx de Ocupação (%)": "20", "Tx Permeabilidade (%)": "80", "Coeficiente Básico": "0,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "não se aplica", "RECUO FRENTE (m)": "10,00", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "2", "ALTURA máxima (metros)": "8", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 5, 6, 7, 8, 9, 11, 12, 13, 15, 16 e 20" },
+            { "ZONA": "ZUE 2", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "não se aplica", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "não se aplica", "Tx de Ocupação (%)": "20", "Tx Permeabilidade (%)": "80", "Coeficiente Básico": "0,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "não se aplica", "RECUO FRENTE (m)": "10,00", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "2", "ALTURA máxima (metros)": "8", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 5, 6, 7, 8, 9, 11, 12, 13, 15, 16 e 20" },
+            { "ZONA": "ZUE 2", "USOS DO SOLO": "EMPREENDIMENTO TURÍSTICO", "LOTE MÍNIMO Admitido (m²)": "não se aplica", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "não se aplica", "Tx de Ocupação (%)": "20", "Tx Permeabilidade (%)": "80", "Coeficiente Básico": "0,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "não se aplica", "RECUO FRENTE (m)": "10,00", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "3", "ALTURA máxima (metros)": "12", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 5, 6, 7, 8, 9, 11, 12, 13, 15, 16 e 20" },
+            { "ZONA": "ZUE 3", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "2.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "15,00", "Tx de Ocupação (%)": "30", "Tx Permeabilidade (%)": "70", "Coeficiente Básico": "0,80", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "1,50", "RECUO FRENTE (m)": "10,00", "RECUO LATERAL (m)": "5,00", "RECUO FUNDO (m)": "5,00", "GABARITO (pavimentos)": "4", "ALTURA máxima (metros)": "15", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 7, 10, 13, 15, 16 e 20" },
+            { "ZONA": "ZUE 3", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "2.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "500,00", "TESTADA minima (m)": "15,00", "Tx de Ocupação (%)": "30", "Tx Permeabilidade (%)": "70", "Coeficiente Básico": "0,80", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "2,40", "RECUO FRENTE (m)": "10,00", "RECUO LATERAL (m)": "5,00", "RECUO FUNDO (m)": "5,00", "GABARITO (pavimentos)": "4", "ALTURA máxima (metros)": "15", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 7, 10, 13, 15, 16 e 20" },
+            { "ZONA": "ZUE 3", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "2.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "500,00", "TESTADA minima (m)": "15,00", "Tx de Ocupação (%)": "30", "Tx Permeabilidade (%)": "70", "Coeficiente Básico": "0,80", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "2,40", "RECUO FRENTE (m)": "10,00", "RECUO LATERAL (m)": "5,00", "RECUO FUNDO (m)": "5,00", "GABARITO (pavimentos)": "4", "ALTURA máxima (metros)": "15", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 7, 10, 13, 15, 16 e 20" },
+            { "ZONA": "ZUE 3", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "2.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "500,00", "TESTADA minima (m)": "15,00", "Tx de Ocupação (%)": "30", "Tx Permeabilidade (%)": "70", "Coeficiente Básico": "0,80", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "2,40", "RECUO FRENTE (m)": "10,00", "RECUO LATERAL (m)": "5,00", "RECUO FUNDO (m)": "5,00", "GABARITO (pavimentos)": "4", "ALTURA máxima (metros)": "15", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 7, 10, 13, 15, 16 e 20" },
+            { "ZONA": "ZUE 3", "USOS DO SOLO": "EMPREENDIMENTO TURÍSTICO", "LOTE MÍNIMO Admitido (m²)": "3.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "30", "Tx Permeabilidade (%)": "70", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "2,40", "RECUO FRENTE (m)": "10,00", "RECUO LATERAL (m)": "5,00", "RECUO FUNDO (m)": "5,00", "GABARITO (pavimentos)": "4", "ALTURA máxima (metros)": "15", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 7, 10, 13, 15, 16 e 20" },
+            { "ZONA": "ZUE 4", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "2.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "15,00", "Tx de Ocupação (%)": "40", "Tx Permeabilidade (%)": "60", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "2,00", "RECUO FRENTE (m)": "10,00", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "5", "ALTURA máxima (metros)": "17", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 8, 10, 12, 13, 15, 16, 18 e 20" },
+            { "ZONA": "ZUE 4", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "4.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "500,00", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "40", "Tx Permeabilidade (%)": "60", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10,00", "RECUO LATERAL (m)": "5,00", "RECUO FUNDO (m)": "5,00", "GABARITO (pavimentos)": "5", "ALTURA máxima (metros)": "17", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 8, 10, 12, 13, 15, 16, 18 e 20" },
+            { "ZONA": "ZUE 4", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "3.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "500,00", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "40", "Tx Permeabilidade (%)": "60", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10,00", "RECUO LATERAL (m)": "5,00", "RECUO FUNDO (m)": "5,00", "GABARITO (pavimentos)": "5", "ALTURA máxima (metros)": "17", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 8, 10, 12, 13, 15, 16, 18 e 20" },
+            { "ZONA": "ZUE 4", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "3.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "500,00", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "40", "Tx Permeabilidade (%)": "60", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10,00", "RECUO LATERAL (m)": "5,00", "RECUO FUNDO (m)": "5,00", "GABARITO (pavimentos)": "5", "ALTURA máxima (metros)": "17", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 8, 10, 12, 13, 15, 16, 18 e 20" },
+            { "ZONA": "ZUE 4", "USOS DO SOLO": "EMPREENDIMENTO TURÍSTICO", "LOTE MÍNIMO Admitido (m²)": "3.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "40", "Tx Permeabilidade (%)": "60", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10,00", "RECUO LATERAL (m)": "5,00", "RECUO FUNDO (m)": "5,00", "GABARITO (pavimentos)": "5", "ALTURA máxima (metros)": "17", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 8, 10, 12, 13, 15, 16, 18 e 20" },
+            { "ZONA": "ZONA RURAL", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "não se aplica", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "não se aplica", "Tx de Ocupação (%)": "20", "Tx Permeabilidade (%)": "80", "Coeficiente Básico": "0,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "não se aplica", "RECUO FRENTE (m)": "10,00", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "2", "ALTURA máxima (metros)": "8", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 5, 6, 7, 11, 12 e 14" },
+            { "ZONA": "ZONA RURAL", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "não se aplica", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "não se aplica", "Tx de Ocupação (%)": "20", "Tx Permeabilidade (%)": "80", "Coeficiente Básico": "0,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "não se aplica", "RECUO FRENTE (m)": "10,00", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "2", "ALTURA máxima (metros)": "8", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 5, 6, 7, 11, 12 e 14" },
+            { "ZONA": "ZONA RURAL", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "não se aplica", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "não se aplica", "Tx de Ocupação (%)": "20", "Tx Permeabilidade (%)": "80", "Coeficiente Básico": "0,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "não se aplica", "RECUO FRENTE (m)": "10,00", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "2", "ALTURA máxima (metros)": "8", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 5, 6, 7, 11, 12 e 14" },
+            { "ZONA": "ZONA RURAL", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "não se aplica", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "não se aplica", "Tx de Ocupação (%)": "20", "Tx Permeabilidade (%)": "80", "Coeficiente Básico": "0,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "não se aplica", "RECUO FRENTE (m)": "10,00", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "2", "ALTURA máxima (metros)": "8", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 5, 6, 7, 11, 12 e 14" },
+            { "ZONA": "ZONA RURAL", "USOS DO SOLO": "EMPREENDIMENTO TURÍSTICO", "LOTE MÍNIMO Admitido (m²)": "não se aplica", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "não se aplica", "Tx de Ocupação (%)": "20", "Tx Permeabilidade (%)": "80", "Coeficiente Básico": "0,50", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "não se aplica", "RECUO FRENTE (m)": "10,00", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "2", "ALTURA máxima (metros)": "8", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "1, 5, 6, 7, 11, 12 e 14" },
+            { "ZONA": "ZPIC", "USOS DO SOLO": "PERMITIDO APENAS O USO INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "não se aplica", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "não se aplica", "Tx de Ocupação (%)": "não se aplica", "Tx Permeabilidade (%)": "não se aplica", "Coeficiente Básico": "não se aplica", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "não se aplica", "RECUO FRENTE (m)": "não se aplica", "RECUO LATERAL (m)": "não se aplica", "RECUO FUNDO (m)": "não se aplica", "GABARITO (pavimentos)": "não se aplica", "ALTURA máxima (metros)": "não se aplica", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "não se aplica" },
+            { "ZONA": "CeLin 1 - BA099 - ESTRADA DO COCO", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "não se aplica", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "não se aplica", "Tx de Ocupação (%)": "não se aplica", "Tx Permeabilidade (%)": "não se aplica", "Coeficiente Básico": "não se aplica", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "não se aplica", "RECUO FRENTE (m)": "não se aplica", "RECUO LATERAL (m)": "não se aplica", "RECUO FUNDO (m)": "não se aplica", "GABARITO (pavimentos)": "não se aplica", "FAIXA DE DOMINIO (metros)": "30", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 8, 10, 12, 16, 18 e 20" },
+            { "ZONA": "CeLin 1 - BA099 - ESTRADA DO COCO", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "1.500,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "500,00", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "40", "Coeficiente Básico": "1,80", "Coeficiente Minimo": "0,10", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10 m após a faixa de dominio", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "GABARITO LIVRE", "FAIXA DE DOMINIO (metros)": "30", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 8, 10, 12, 16, 18 e 20" },
+            { "ZONA": "CeLin 1 - BA099 - ESTRADA DO COCO", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "1.500,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "500,00", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "40", "Coeficiente Básico": "1,80", "Coeficiente Minimo": "0,10", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10 m após a faixa de dominio", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "GABARITO LIVRE", "FAIXA DE DOMINIO (metros)": "30", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 8, 10, 12, 16, 18 e 20" },
+            { "ZONA": "CeLin 1 - BA099 - ESTRADA DO COCO", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "1.500,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "750,00", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "40", "Coeficiente Básico": "1,80", "Coeficiente Minimo": "0,10", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10 m após a faixa de dominio", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "GABARITO LIVRE", "FAIXA DE DOMINIO (metros)": "30", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 8, 10, 12, 16, 18 e 20" },
+            { "ZONA": "CeLin 1 - BA099 - ESTRADA DO COCO", "USOS DO SOLO": "EMPREENDIMENTO TURÍSTICO", "LOTE MÍNIMO Admitido (m²)": "1.500,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "750,00", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "40", "Coeficiente Básico": "1,80", "Coeficiente Minimo": "0,10", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10 m após a faixa de dominio", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "GABARITO LIVRE", "FAIXA DE DOMINIO (metros)": "30", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 8, 10, 12, 16, 18 e 20" },
+            { "ZONA": "CeLin 2 - VIA METROPOLITANA", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "não se aplica", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "não se aplica", "Tx de Ocupação (%)": "não se aplica", "Tx Permeabilidade (%)": "não se aplica", "Coeficiente Básico": "não se aplica", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "não se aplica", "RECUO FRENTE (m)": "não se aplica", "RECUO LATERAL (m)": "não se aplica", "RECUO FUNDO (m)": "não se aplica", "GABARITO (pavimentos)": "não se aplica", "FAIXA DE DOMINIO (metros)": "30", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 10, 12 e 18" },
+            { "ZONA": "CeLin 2 - VIA METROPOLITANA", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "1.500,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "500,00", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "40", "Coeficiente Básico": "1,80", "Coeficiente Minimo": "0,10", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10 m após a faixa de dominio", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "GABARITO LIVRE", "FAIXA DE DOMINIO (metros)": "30", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 10, 12 e 18" },
+            { "ZONA": "CeLin 2 - VIA METROPOLITANA", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "1.500,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "500,00", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "40", "Coeficiente Básico": "1,80", "Coeficiente Minimo": "0,10", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10 m após a faixa de dominio", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "GABARITO LIVRE", "FAIXA DE DOMINIO (metros)": "30", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 10, 12 e 18" },
+            { "ZONA": "CeLin 2 - VIA METROPOLITANA", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "1.500,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "500,00", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "40", "Coeficiente Básico": "1,80", "Coeficiente Minimo": "0,10", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10 m após a faixa de dominio", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "GABARITO LIVRE", "FAIXA DE DOMINIO (metros)": "30", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 10, 12 e 18" },
+            { "ZONA": "CeLin 2 - VIA METROPOLITANA", "USOS DO SOLO": "EMPREENDIMENTO TURÍSTICO", "LOTE MÍNIMO Admitido (m²)": "1.500,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "500,00", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "40", "Coeficiente Básico": "1,80", "Coeficiente Minimo": "0,10", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10 m após a faixa de dominio", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "GABARITO LIVRE", "FAIXA DE DOMINIO (metros)": "30", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 10, 12 e 18" },
+            { "ZONA": "CeLin 3 - VIA CASCALHEIRA", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "não se aplica", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "não se aplica", "Tx de Ocupação (%)": "não se aplica", "Tx Permeabilidade (%)": "não se aplica", "Coeficiente Básico": "não se aplica", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "não se aplica", "RECUO FRENTE (m)": "não se aplica", "RECUO LATERAL (m)": "não se aplica", "RECUO FUNDO (m)": "não se aplica", "GABARITO (pavimentos)": "não se aplica", "FAIXA DE DOMINIO (metros)": "20", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 9, 10, 12 e 18" },
+            { "ZONA": "CeLin 3 - VIA CASCALHEIRA", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "1.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "250,00", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "70", "Tx Permeabilidade (%)": "25", "Coeficiente Básico": "1,80", "Coeficiente Minimo": "0,10", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10 m após a faixa de dominio", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "GABARITO LIVRE", "FAIXA DE DOMINIO (metros)": "20", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 9, 10, 12 e 18" },
+            { "ZONA": "CeLin 3 - VIA CASCALHEIRA", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "1.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "250,00", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "70", "Tx Permeabilidade (%)": "25", "Coeficiente Básico": "1,80", "Coeficiente Minimo": "0,10", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10 m após a faixa de dominio", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "GABARITO LIVRE", "FAIXA DE DOMINIO (metros)": "20", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 9, 10, 12 e 18" },
+            { "ZONA": "CeLin 3 - VIA CASCALHEIRA", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "1.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "250,00", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "70", "Tx Permeabilidade (%)": "25", "Coeficiente Básico": "1,80", "Coeficiente Minimo": "0,10", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10 m após a faixa de dominio", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "GABARITO LIVRE", "FAIXA DE DOMINIO (metros)": "20", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 9, 10, 12 e 18" },
+            { "ZONA": "CeLin 3 - VIA CASCALHEIRA", "USOS DO SOLO": "EMPREENDIMENTO TURÍSTICO", "LOTE MÍNIMO Admitido (m²)": "1.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "250,00", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "70", "Tx Permeabilidade (%)": "25", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "0,10", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10 m após a faixa de dominio", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "GABARITO LIVRE", "FAIXA DE DOMINIO (metros)": "20", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 9, 10, 12 e 18" },
+            { "ZONA": "CeLin 4 - VIA DE LIGAÇÃO ESTRADA CASCALHEIRA-CETREL", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "não se aplica", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "não se aplica", "Tx de Ocupação (%)": "não se aplica", "Tx Permeabilidade (%)": "não se aplica", "Coeficiente Básico": "não se aplica", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "não se aplica", "RECUO FRENTE (m)": "não se aplica", "RECUO LATERAL (m)": "não se aplica", "RECUO FUNDO (m)": "não se aplica", "GABARITO (pavimentos)": "não se aplica", "FAIXA DE DOMINIO (metros)": "15", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 6, 7, 9, 10, 12, 13 e 18" },
+            { "ZONA": "CeLin 4 - VIA DE LIGAÇÃO ESTRADA CASCALHEIRA-CETREL", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "3.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "750,00", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "30", "Tx Permeabilidade (%)": "70", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "0,10", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10 m após a faixa de dominio", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "GABARITO LIVRE", "FAIXA DE DOMINIO (metros)": "15", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 6, 7, 9, 10, 12, 13 e 18" },
+            { "ZONA": "CeLin 4 - VIA DE LIGAÇÃO ESTRADA CASCALHEIRA-CETREL", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "3.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "750,00", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "30", "Tx Permeabilidade (%)": "70", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "0,10", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10 m após a faixa de dominio", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "GABARITO LIVRE", "FAIXA DE DOMINIO (metros)": "15", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 6, 7, 9, 10, 12, 13 e 18" },
+            { "ZONA": "CeLin 4 - VIA DE LIGAÇÃO ESTRADA CASCALHEIRA-CETREL", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "3.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "750,00", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "30", "Tx Permeabilidade (%)": "70", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "0,10", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10 m após a faixa de dominio", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "GABARITO LIVRE", "FAIXA DE DOMINIO (metros)": "15", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 6, 7, 9, 10, 12, 13 e 18" },
+            { "ZONA": "CeLin 4 - VIA DE LIGAÇÃO ESTRADA CASCALHEIRA-CETREL", "USOS DO SOLO": "EMPREENDIMENTO TURÍSTICO", "LOTE MÍNIMO Admitido (m²)": "3.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "750,00", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "30", "Tx Permeabilidade (%)": "70", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "0,10", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10 m após a faixa de dominio", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "GABARITO LIVRE", "FAIXA DE DOMINIO (metros)": "15", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 6, 7, 9, 10, 12, 13 e 18" },
+            { "ZONA": "CeLin 5 - VIA PARAFUSO", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "não se aplica", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "não se aplica", "Tx de Ocupação (%)": "não se aplica", "Tx Permeabilidade (%)": "não se aplica", "Coeficiente Básico": "não se aplica", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "não se aplica", "RECUO FRENTE (m)": "não se aplica", "RECUO LATERAL (m)": "não se aplica", "RECUO FUNDO (m)": "não se aplica", "GABARITO (pavimentos)": "não se aplica", "FAIXA DE DOMINIO (metros)": "50", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 9, 10, 12, 18 e 20" },
+            { "ZONA": "CeLin 5 - VIA PARAFUSO", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "5.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "1.000,00", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "70", "Tx Permeabilidade (%)": "30", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "0,10", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10 m após a faixa de dominio", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "GABARITO LIVRE", "FAIXA DE DOMINIO (metros)": "50", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 9, 10, 12, 18 e 20" },
+            { "ZONA": "CeLin 5 - VIA PARAFUSO", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "5.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "1.000,00", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "70", "Tx Permeabilidade (%)": "30", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "0,10", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10 m após a faixa de dominio", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "GABARITO LIVRE", "FAIXA DE DOMINIO (metros)": "50", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 9, 10, 12, 18 e 20" },
+            { "ZONA": "CeLin 5 - VIA PARAFUSO", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "5.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "1.000,00", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "70", "Tx Permeabilidade (%)": "30", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "0,10", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10 m após a faixa de dominio", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "GABARITO LIVRE", "FAIXA DE DOMINIO (metros)": "50", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 9, 10, 12, 18 e 20" },
+            { "ZONA": "CeLin 5 - VIA PARAFUSO", "USOS DO SOLO": "EMPREENDIMENTO TURÍSTICO", "LOTE MÍNIMO Admitido (m²)": "5.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "1.000,00", "TESTADA minima (m)": "20,00", "Tx de Ocupação (%)": "70", "Tx Permeabilidade (%)": "30", "Coeficiente Básico": "2,50", "Coeficiente Minimo": "0,10", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10 m após a faixa de dominio", "RECUO LATERAL (m)": "3,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "GABARITO LIVRE", "FAIXA DE DOMINIO (metros)": "50", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 9, 10, 12, 18 e 20" },
+            { "ZONA": "CeLin 6 - AV JORGE AMADO", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "não se aplica", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "não se aplica", "Tx de Ocupação (%)": "não se aplica", "Tx Permeabilidade (%)": "não se aplica", "Coeficiente Básico": "não se aplica", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "não se aplica", "RECUO FRENTE (m)": "não se aplica", "RECUO LATERAL (m)": "não se aplica", "RECUO FUNDO (m)": "não se aplica", "GABARITO (pavimentos)": "não se aplica", "FAIXA DE DOMINIO (metros)": "20", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 6, 7, 9, 10, 12 e 18" },
+            { "ZONA": "CeLin 6 - AV JORGE AMADO", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "1.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "250,00", "TESTADA minima (m)": "15,00", "Tx de Ocupação (%)": "70", "Tx Permeabilidade (%)": "30", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "0,10", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10 m após a faixa de dominio", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "GABARITO LIVRE", "FAIXA DE DOMINIO (metros)": "20", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 6, 7, 9, 10, 12 e 18" },
+            { "ZONA": "CeLin 6 - AV JORGE AMADO", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "1.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "250,00", "TESTADA minima (m)": "15,00", "Tx de Ocupação (%)": "70", "Tx Permeabilidade (%)": "30", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "0,10", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10 m após a faixa de dominio", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "GABARITO LIVRE", "FAIXA DE DOMINIO (metros)": "20", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 6, 7, 9, 10, 12 e 18" },
+            { "ZONA": "CeLin 6 - AV JORGE AMADO", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "1.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "250,00", "TESTADA minima (m)": "15,00", "Tx de Ocupação (%)": "70", "Tx Permeabilidade (%)": "30", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "0,10", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10 m após a faixa de dominio", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "GABARITO LIVRE", "FAIXA DE DOMINIO (metros)": "20", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 6, 7, 9, 10, 12 e 18" },
+            { "ZONA": "CeLin 6 - AV JORGE AMADO", "USOS DO SOLO": "EMPREENDIMENTO TURÍSTICO", "LOTE MÍNIMO Admitido (m²)": "1.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "250,00", "TESTADA minima (m)": "15,00", "Tx de Ocupação (%)": "70", "Tx Permeabilidade (%)": "30", "Coeficiente Básico": "2,50", "Coeficiente Minimo": "0,10", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10 m após a faixa de dominio", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "GABARITO LIVRE", "FAIXA DE DOMINIO (metros)": "20", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 6, 7, 9, 10, 12 e 18" },
+            { "ZONA": "CeLin 7 - BA 512 - VIA COPEC", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "não se aplica", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "não se aplica", "TESTADA minima (m)": "não se aplica", "Tx de Ocupação (%)": "não se aplica", "Tx Permeabilidade (%)": "não se aplica", "Coeficiente Básico": "não se aplica", "Coeficiente Minimo": "não se aplica", "Coeficiente Máximo": "não se aplica", "RECUO FRENTE (m)": "não se aplica", "RECUO LATERAL (m)": "não se aplica", "RECUO FUNDO (m)": "não se aplica", "GABARITO (pavimentos)": "não se aplica", "FAIXA DE DOMINIO (metros)": "20", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 9, 10, 12 e 18" },
+            { "ZONA": "CeLin 7 - BA 512 - VIA COPEC", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "1.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "250,00", "TESTADA minima (m)": "15,00", "Tx de Ocupação (%)": "75", "Tx Permeabilidade (%)": "25", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "0,10", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10 m após a faixa de dominio", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "GABARITO LIVRE", "FAIXA DE DOMINIO (metros)": "20", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 9, 10, 12 e 18" },
+            { "ZONA": "CeLin 7 - BA 512 - VIA COPEC", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "1.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "250,00", "TESTADA minima (m)": "15,00", "Tx de Ocupação (%)": "75", "Tx Permeabilidade (%)": "25", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "0,10", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10 m após a faixa de dominio", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "GABARITO LIVRE", "FAIXA DE DOMINIO (metros)": "20", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 9, 10, 12 e 18" },
+            { "ZONA": "CeLin 7 - BA 512 - VIA COPEC", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "1.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "250,00", "TESTADA minima (m)": "15,00", "Tx de Ocupação (%)": "75", "Tx Permeabilidade (%)": "25", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "0,10", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10 m após a faixa de dominio", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "GABARITO LIVRE", "FAIXA DE DOMINIO (metros)": "20", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 9, 10, 12 e 18" },
+            { "ZONA": "CeLin 7 - BA 512 - VIA COPEC", "USOS DO SOLO": "EMPREENDIMENTO TURÍSTICO", "LOTE MÍNIMO Admitido (m²)": "1.000,00", "FRAÇÃO MINIMA PRIV. PARA COND DE LOTES (m²)": "250,00", "TESTADA minima (m)": "15,00", "Tx de Ocupação (%)": "75", "Tx Permeabilidade (%)": "25", "Coeficiente Básico": "2,50", "Coeficiente Minimo": "0,10", "Coeficiente Máximo": "4,50", "RECUO FRENTE (m)": "10 m após a faixa de dominio", "RECUO LATERAL (m)": "2,00", "RECUO FUNDO (m)": "3,00", "GABARITO (pavimentos)": "GABARITO LIVRE", "FAIXA DE DOMINIO (metros)": "20", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "2, 4, 5, 6, 7, 9, 10, 12 e 18" },
+            { "ZONA": "ZEIS 1", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "125,00", "FRAÇÃO MÍNIMA PRIV. PARA COND. DE LOTES (m²)": "n/a", "TESTADA mínima (m)": "5,00", "Tx de Ocupação (%)": "80", "Tx Permeabilidade (%)": "15", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "0,05", "RECUO FRENTE (m)": "2,50", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "GABARITO LIVRE", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 12 e 13" },
+            { "ZONA": "ZEIS 1", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "125,00", "FRAÇÃO MÍNIMA PRIV. PARA COND. DE LOTES (m²)": "50,00", "TESTADA mínima (m)": "5,00", "Tx de Ocupação (%)": "80", "Tx Permeabilidade (%)": "15", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "0,05", "RECUO FRENTE (m)": "2,50", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "GABARITO LIVRE", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 12 e 13" },
+            { "ZONA": "ZEIS 1", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "125,00", "FRAÇÃO MÍNIMA PRIV. PARA COND. DE LOTES (m²)": "50,00", "TESTADA mínima (m)": "5,00", "Tx de Ocupação (%)": "80", "Tx Permeabilidade (%)": "15", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "0,05", "RECUO FRENTE (m)": "2,50", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "GABARITO LIVRE", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 12 e 13" },
+            { "ZONA": "ZEIS 1", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "125,00", "FRAÇÃO MÍNIMA PRIV. PARA COND. DE LOTES (m²)": "50,00", "TESTADA mínima (m)": "5,00", "Tx de Ocupação (%)": "80", "Tx Permeabilidade (%)": "15", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "0,05", "RECUO FRENTE (m)": "2,50", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "GABARITO LIVRE", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 12 e 13" },
+            { "ZONA": "ZEIS 2", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "125,00", "FRAÇÃO MÍNIMA PRIV. PARA COND. DE LOTES (m²)": "n/a", "TESTADA mínima (m)": "5,00", "Tx de Ocupação (%)": "70", "Tx Permeabilidade (%)": "25", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "0,05", "RECUO FRENTE (m)": "2,50", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "GABARITO LIVRE", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 12 e 13" },
+            { "ZONA": "ZEIS 2", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "150,00", "FRAÇÃO MÍNIMA PRIV. PARA COND. DE LOTES (m²)": "50,00", "TESTADA mínima (m)": "5,00", "Tx de Ocupação (%)": "70", "Tx Permeabilidade (%)": "25", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "0,05", "RECUO FRENTE (m)": "2,50", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "GABARITO LIVRE", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 12 e 13" },
+            { "ZONA": "ZEIS 2", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "150,00", "FRAÇÃO MÍNIMA PRIV. PARA COND. DE LOTES (m²)": "50,00", "TESTADA mínima (m)": "5,00", "Tx de Ocupação (%)": "70", "Tx Permeabilidade (%)": "25", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "0,05", "RECUO FRENTE (m)": "2,50", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "GABARITO LIVRE", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 12 e 13" },
+            { "ZONA": "ZEIS 2", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "150,00", "FRAÇÃO MÍNIMA PRIV. PARA COND. DE LOTES (m²)": "50,00", "TESTADA mínima (m)": "5,00", "Tx de Ocupação (%)": "70", "Tx Permeabilidade (%)": "25", "Coeficiente Básico": "2,00", "Coeficiente Minimo": "0,05", "RECUO FRENTE (m)": "2,50", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "GABARITO LIVRE", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 12 e 13" },
+            { "ZONA": "ZEIS 3", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "150,00", "FRAÇÃO MÍNIMA PRIV. PARA COND. DE LOTES (m²)": "n/a", "TESTADA mínima (m)": "6,00", "Tx de Ocupação (%)": "70", "Tx Permeabilidade (%)": "25", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "0,05", "RECUO FRENTE (m)": "3,00", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "GABARITO LIVRE", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 12, 13 e 19" },
+            { "ZONA": "ZEIS 3", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "200,00", "FRAÇÃO MÍNIMA PRIV. PARA COND. DE LOTES (m²)": "60,00", "TESTADA mínima (m)": "8,00", "Tx de Ocupação (%)": "70", "Tx Permeabilidade (%)": "25", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "0,05", "RECUO FRENTE (m)": "4,00", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "GABARITO LIVRE", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 12, 13 e 19" },
+            { "ZONA": "ZEIS 3", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "200,00", "FRAÇÃO MÍNIMA PRIV. PARA COND. DE LOTES (m²)": "60,00", "TESTADA mínima (m)": "8,00", "Tx de Ocupação (%)": "70", "Tx Permeabilidade (%)": "25", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "0,05", "RECUO FRENTE (m)": "4,00", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "GABARITO LIVRE", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 12, 13 e 19" },
+            { "ZONA": "ZEIS 3", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "200,00", "FRAÇÃO MÍNIMA PRIV. PARA COND. DE LOTES (m²)": "60,00", "TESTADA mínima (m)": "8,00", "Tx de Ocupação (%)": "70", "Tx Permeabilidade (%)": "25", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "0,05", "RECUO FRENTE (m)": "4,00", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "GABARITO LIVRE", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 12, 13 e 19" },
+            { "ZONA": "ZEIS 4", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "200,00", "FRAÇÃO MÍNIMA PRIV. PARA COND. DE LOTES (m²)": "n/a", "TESTADA mínima (m)": "10,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "30", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "0,05", "RECUO FRENTE (m)": "2,50", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "GABARITO LIVRE", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 12 e 13" },
+            { "ZONA": "ZEIS 4", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "250,00", "FRAÇÃO MÍNIMA PRIV. PARA COND. DE LOTES (m²)": "100,00", "TESTADA mínima (m)": "10,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "30", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "0,05", "RECUO FRENTE (m)": "3,00", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "GABARITO LIVRE", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 12 e 13" },
+            { "ZONA": "ZEIS 4", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "300,00", "FRAÇÃO MÍNIMA PRIV. PARA COND. DE LOTES (m²)": "100,00", "TESTADA mínima (m)": "10,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "30", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "0,05", "RECUO FRENTE (m)": "3,00", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "GABARITO LIVRE", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 12 e 13" },
+            { "ZONA": "ZEIS 4", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "300,00", "FRAÇÃO MÍNIMA PRIV. PARA COND. DE LOTES (m²)": "100,00", "TESTADA mínima (m)": "10,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "30", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "0,05", "RECUO FRENTE (m)": "3,00", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "1,50", "GABARITO (pavimentos)": "GABARITO LIVRE", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "3, 4, 5, 6, 12 e 13" },
+            { "ZONA": "ZEIS 5", "USOS DO SOLO": "UNIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "150,00", "FRAÇÃO MÍNIMA PRIV. PARA COND. DE LOTES (m²)": "n/a", "TESTADA mínima (m)": "6,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "40", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "0,05", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "GABARITO LIVRE", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "Não se aplica" },
+            { "ZONA": "ZEIS 5", "USOS DO SOLO": "PLURIRESIDENCIAL", "LOTE MÍNIMO Admitido (m²)": "250,00", "FRAÇÃO MÍNIMA PRIV. PARA COND. DE LOTES (m²)": "60,00", "TESTADA mínima (m)": "8,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "40", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "0,05", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "GABARITO LIVRE", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "Não se aplica" },
+            { "ZONA": "ZEIS 5", "USOS DO SOLO": "COMÉRCIO, SERVIÇO, INSTITUCIONAL", "LOTE MÍNIMO Admitido (m²)": "250,00", "FRAÇÃO MÍNIMA PRIV. PARA COND. DE LOTES (m²)": "60,00", "TESTADA mínima (m)": "8,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "40", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "0,05", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "GABARITO LIVRE", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "Não se aplica" },
+            { "ZONA": "ZEIS 5", "USOS DO SOLO": "INDUSTRIAL", "LOTE MÍNIMO Admitido (m²)": "250,00", "FRAÇÃO MÍNIMA PRIV. PARA COND. DE LOTES (m²)": "60,00", "TESTADA mínima (m)": "8,00", "Tx de Ocupação (%)": "60", "Tx Permeabilidade (%)": "40", "Coeficiente Básico": "1,50", "Coeficiente Minimo": "0,05", "RECUO FRENTE (m)": "5,00", "RECUO LATERAL (m)": "1,50", "RECUO FUNDO (m)": "2,00", "GABARITO (pavimentos)": "GABARITO LIVRE", "REQUISITOS ou PRERROGATIVAS ESPECIAIS": "Não se aplica" }
+        ];
+
+        // Popular o select de Zonas ao carregar
+        function popularZonas() {
+            const zoneSelect = document.getElementById('zona');
+            zoneSelect.innerHTML = '<option value="" disabled selected>Selecione a Zona</option>';
+            const zonasUnicas = [...new Set(urbanData.map(item => item.ZONA))];
+            zonasUnicas.sort();
+            zonasUnicas.forEach(zona => {
+                const opt = document.createElement('option');
+                opt.value = zona;
+                opt.textContent = zona;
+                zoneSelect.appendChild(opt);
+            });
+        }
+
+        // Atualizar os Usos do Solo disponíveis de acordo com a Zona escolhida
+        function atualizarUsos() {
+            const zoneSelect = document.getElementById('zona');
+            const useSelect = document.getElementById('uso_solo');
+            const selectedZone = zoneSelect.value;
+            
+            useSelect.innerHTML = '<option value="" disabled selected>Selecione o Uso</option>';
+            
+            if (selectedZone) {
+                const zoneItems = urbanData.filter(item => item.ZONA === selectedZone);
+                const usosPermitidos = [...new Set(zoneItems.map(item => item['USOS DO SOLO']))];
+                usosPermitidos.sort();
+                usosPermitidos.forEach(uso => {
+                    const opt = document.createElement('option');
+                    opt.value = uso;
+                    opt.textContent = uso;
+                    useSelect.appendChild(opt);
+                });
+                useSelect.disabled = false;
+            } else {
+                useSelect.disabled = true;
+            }
+            document.getElementById('parametros-result').innerHTML = "<em>Selecione a Zona e o Uso do Solo para visualizar os Parâmetros e Prerrogativas Especiais de referência da legislação.</em>";
+        }
+
+        // Função para popular a div de resultados e calcular conformidade
+        function verificarParametros() {
+            const zonaSelect = document.getElementById('zona').value;
+            const usoSelect = document.getElementById('uso_solo').value;
+            const divResult = document.getElementById('parametros-result');
+
+            if (!usoSelect || !zonaSelect) {
+                divResult.innerHTML = "<em>Selecione a Zona e o Uso do Solo para visualizar os Parâmetros e Prerrogativas Especiais de referência da legislação.</em>";
+                return;
+            }
+
+            const paramData = urbanData.find(item => item.ZONA === zonaSelect && item['USOS DO SOLO'] === usoSelect);
+
+            if (paramData) {
+                let reqTexto = "";
+                const reqs = paramData['REQUISITOS ou PRERROGATIVAS ESPECIAIS'];
+                if (reqs && reqs.toLowerCase() !== 'não se aplica' && reqs.toLowerCase() !== 'n/a') {
+                    const reqNumbers = reqs.replace(/ e /g, ',').split(',').map(n => n.trim()).filter(n => n);
+                    const uniqueReqNumbers = [...new Set(reqNumbers)];
+                    
+                    reqTexto = "<ul style='list-style-type: disc; padding-left: 20px; font-size: 9pt;'>";
+                    uniqueReqNumbers.forEach(num => {
+                        if (prerrogativas[num]) {
+                            reqTexto += `<li style="margin-bottom: 5px;"><strong>${num}:</strong> ${prerrogativas[num]}</li>`;
+                        }
+                    });
+                    reqTexto += "</ul>";
+                } else {
+                    reqTexto = "<p style='font-size: 9pt; font-style: italic;'>Não há requisitos ou prerrogativas especiais aplicáveis para esta seleção.</p>";
+                }
+
+                let html = `
+                    <h4 style="margin-top:0;">Referência Normativa: ${zonaSelect}</h4>
+                    <p><strong>Uso Solicitado:</strong> <span class="color-indigo">${usoSelect}</span></p>
+                    
+                    <div style="background-color: #fff; padding: 10px; border: 1px solid #ccc; margin-top: 10px; border-radius: 4px;">
+                        <div class="grid-2">
+                            <div>
+                                <p><strong>CA Básico:</strong> ${paramData['Coeficiente Básico'] || '-'}</p>
+                                <p><strong>CA Máximo:</strong> ${paramData['Coeficiente Máximo'] || '-'}</p>
+                                <p><strong>TO Máxima (%):</strong> ${paramData['Tx de Ocupação (%)'] || paramData['Tx de Ocupação'] || '-'}</p>
+                                <p><strong>TP Mínima (%):</strong> ${paramData['Tx Permeabilidade (%)'] || paramData['Tx Permeabilidade'] || '-'}</p>
+                                <p><strong>Lote Mínimo (m²):</strong> ${paramData['LOTE MÍNIMO Admitido (m²)'] || '-'}</p>
+                            </div>
+                            <div>
+                                <p><strong>Recuo Frente Mín (m):</strong> ${paramData['RECUO FRENTE (m)'] || '-'}</p>
+                                <p><strong>Recuo Lateral Mín (m):</strong> ${paramData['RECUO LATERAL (m)'] || '-'}</p>
+                                <p><strong>Recuo Fundo Mín (m):</strong> ${paramData['RECUO FUNDO (m)'] || '-'}</p>
+                                <p><strong>Gabarito Máx (Pavimentos):</strong> ${paramData['GABARITO (pavimentos)'] || '-'}</p>
+                                <p><strong>Altura Máx (m):</strong> ${paramData['ALTURA máxima (metros)'] || '-'}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 10px;">
+                        <p style="color: #8b0000; font-weight: bold; margin-bottom: 5px;">Requisitos e Prerrogativas Especiais:</p>
+                        ${reqTexto}
+                    </div>
+                    <p style="font-size: 8pt; margin-top: 10px; text-align: right; color: #555;">* Os dados acima são extraídos da Lei Complementar nº1874/2023 (Código Urbanístico).</p>
+                `;
+                divResult.innerHTML = html;
+            } else {
+                divResult.innerHTML = "<p style='color:red;'><strong>Atenção:</strong> Dados de parâmetros não encontrados para esta combinação.</p>";
+            }
+            validarConformidade();
+        }
+
+        // Função de Validação (Cruzamento Dados Calculados vs Parâmetros Oficiais)
+        function validarConformidade() {
+            const zonaSelect = document.getElementById('zona').value;
+            const usoSelect = document.getElementById('uso_solo').value;
+            const paramData = urbanData.find(item => item.ZONA === zonaSelect && item['USOS DO SOLO'] === usoSelect);
+            const recuoNaoAplica = document.getElementById('recuos_nao_aplica').checked;
+
+            const setValidacao = (inputId, spanId, calcVal, paramStr, tipo) => {
+                const input = document.getElementById(inputId);
+                const span = document.getElementById(spanId);
+                if (!input || !span) return;
+
+                // Remove classes anteriores
+                input.classList.remove('input-success', 'input-error', 'input-warning');
+                span.className = 'msg-valida';
+
+                if (!paramData || paramStr === undefined) {
+                    span.textContent = '';
+                    return;
+                }
+
+                const isRecuo = tipo.startsWith('RECUO');
+                if (isRecuo && recuoNaoAplica) {
+                    span.textContent = 'Não se aplica a este projeto';
+                    span.classList.add('text-orange');
+                    return;
+                }
+
+                if (isNaN(calcVal) || input.value.trim() === '') {
+                    span.textContent = 'Aguardando preenchimento...';
+                    span.classList.add('text-orange');
+                    return;
+                }
+
+                let offValStr = paramStr.toString().toLowerCase();
+                if (offValStr.includes("não se aplica") || offValStr.includes("n/a")) {
+                    span.textContent = '✅ Parâmetro isento (Não se aplica)';
+                    span.classList.add('text-green');
+                    input.classList.add('input-success');
+                    return;
+                }
+
+                const match = paramStr.toString().replace(',', '.').match(/[\d.]+/);
+                let offVal = match ? parseFloat(match[0]) : NaN;
+
+                if (isNaN(offVal)) {
+                    span.textContent = '⚠️ Validação manual necessária';
+                    span.classList.add('text-orange');
+                    input.classList.add('input-warning');
+                    return;
+                }
+
+                let isValid = false;
+                let msg = '';
+
+                if (tipo === 'TO' || tipo === 'CA') {
+                    isValid = calcVal <= offVal;
+                    msg = isValid ? "✅ Atende (Máx: " + offVal + ")" : "❌ Excede limite (Máx: " + offVal + ")";
+                } else if (tipo === 'TP' || isRecuo) {
+                    isValid = calcVal >= offVal;
+                    msg = isValid ? "✅ Atende (Mín: " + offVal + ")" : "❌ Abaixo do mínimo (Mín: " + offVal + ")";
+                }
+
+                span.textContent = msg;
+                if (isValid) {
+                    span.classList.add('text-green');
+                    input.classList.add('input-success');
+                } else {
+                    span.classList.add('text-red');
+                    input.classList.add('input-error');
+                }
+            };
+
+            const calcTO = parseFloat(document.getElementById('res_to').value) || NaN;
+            const calcTP = parseFloat(document.getElementById('res_tp').value) || NaN;
+            const calcCA = parseFloat(document.getElementById('res_ca').value) || NaN;
+            
+            const recFrente = parseFloat(document.getElementById('recuo_frente').value);
+            const recLatDir = parseFloat(document.getElementById('recuo_lat_dir').value);
+            const recLatEsq = parseFloat(document.getElementById('recuo_lat_esq').value);
+            const recFundo = parseFloat(document.getElementById('recuo_fundo').value);
+
+            setValidacao('res_to', 'val_to', calcTO, paramData ? (paramData['Tx de Ocupação (%)'] || paramData['Tx de Ocupação']) : undefined, 'TO');
+            setValidacao('res_tp', 'val_tp', calcTP, paramData ? (paramData['Tx Permeabilidade (%)'] || paramData['Tx Permeabilidade']) : undefined, 'TP');
+            setValidacao('res_ca', 'val_ca', calcCA, paramData ? paramData['Coeficiente Básico'] : undefined, 'CA');
+
+            setValidacao('recuo_frente', 'val_recuo_frente', recFrente, paramData ? paramData['RECUO FRENTE (m)'] : undefined, 'RECUO_FRENTE');
+            setValidacao('recuo_lat_dir', 'val_recuo_lat_dir', recLatDir, paramData ? paramData['RECUO LATERAL (m)'] : undefined, 'RECUO_LATERAL');
+            setValidacao('recuo_lat_esq', 'val_recuo_lat_esq', recLatEsq, paramData ? paramData['RECUO LATERAL (m)'] : undefined, 'RECUO_LATERAL');
+            setValidacao('recuo_fundo', 'val_recuo_fundo', recFundo, paramData ? paramData['RECUO FUNDO (m)'] : undefined, 'RECUO_FUNDO');
+        }
+
+        // Inicializa as zonas ao carregar a página
+        window.onload = popularZonas;
+    </script>
+</body>
+</html>
